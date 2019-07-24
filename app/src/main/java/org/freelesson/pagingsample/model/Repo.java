@@ -17,7 +17,7 @@ public class Repo {
     public String description;
    @SerializedName("stargazers_count")
     public int stars;
-   @SerializedName("full-name")
+   @SerializedName("full_name")
     public String fullName;
    @SerializedName("forks_count")
    public int forks;

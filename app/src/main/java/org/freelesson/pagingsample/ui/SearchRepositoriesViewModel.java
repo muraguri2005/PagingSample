@@ -20,16 +20,10 @@ public class SearchRepositoriesViewModel extends ViewModel {
         this.repository = repository;
     }
     MutableLiveData<String> queryLiveData = new MutableLiveData<>();
-    LiveData<RepoSearchResult> repoResult = Transformations.map(queryLiveData, it -> {
-         return repository.search(it);
-    });
+    LiveData<RepoSearchResult> repoResult = Transformations.map(queryLiveData, it -> repository.search(it));
 
-    LiveData<List<Repo>> repos = Transformations.switchMap(repoResult, it-> {
-        return it.data;
-    });
-    LiveData<String> networkErrors = Transformations.switchMap(repoResult, it -> {
-        return it.networkErrors;
-    });
+    LiveData<List<Repo>> repos = Transformations.switchMap(repoResult, it-> it.data);
+    LiveData<String> networkErrors = Transformations.switchMap(repoResult, it -> it.networkErrors);
 
     public void searchRepo(String query) {
         queryLiveData.postValue(query);

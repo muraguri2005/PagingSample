@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import org.freelesson.pagingsample.db.GithubLocalCache;
 import org.freelesson.pagingsample.api.GithubService;
-import org.freelesson.pagingsample.db.InsertCallback;
 import org.freelesson.pagingsample.model.Repo;
 import org.freelesson.pagingsample.model.RepoSearchResult;
 import org.freelesson.pagingsample.api.RepoSearchResponse;
@@ -52,6 +51,7 @@ public class GithubRepository {
             @Override
             public void onSuccess(List list) {
                 cache.insert(list, () -> {
+                    System.out.println("Send something complete "+list.size());
                     lastRequestedPage++;
                     isRequestInProgress = false;
                 });
@@ -74,10 +74,13 @@ public class GithubRepository {
             public void onResponse(Call<RepoSearchResponse> call, Response<RepoSearchResponse> response) {
                 if (response.isSuccessful()) {
                     System.out.println(response.body()!=null && !response.body().items.isEmpty());
-                    if (response.body()!=null && !response.body().items.isEmpty())
+                    if (response.body()!=null && !response.body().items.isEmpty()) {
+                        System.out.println("Send something "+response.body().items.size());
                         repositoryCallback.onSuccess(response.body().items);
-                    else
+                    } else {
+                        System.out.println("Send empty");
                         repositoryCallback.onSuccess(Collections.emptyList());
+                    }
                 } else {
                     try {
                         if (response.errorBody() != null && !response.errorBody().string().isEmpty())
