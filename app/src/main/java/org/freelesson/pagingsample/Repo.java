@@ -1,5 +1,6 @@
 package org.freelesson.pagingsample;
 
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -15,5 +16,18 @@ public class Repo {
    @SerializedName("description")
     String description;
    @SerializedName("stargazers_count")
-    String stars;
+    int stars;
+   @SerializedName("full-name")
+    String fullName;
+   @SerializedName("forks_count")
+   int forks;
+
+   @SerializedName("language")
+   String language;
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        //TODO: add contents equal to
+        return fullName.equals(((Repo)obj).fullName);
+    }
 }

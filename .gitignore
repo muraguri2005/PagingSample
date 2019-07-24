@@ -12,3 +12,9 @@
 /captures
 .externalNativeBuild
 .idea
+/bin/
+.classpath
+app/.classpath
+.project
+app/.project
+.settings/
