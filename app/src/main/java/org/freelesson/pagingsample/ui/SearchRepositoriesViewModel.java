@@ -1,10 +1,14 @@
-package org.freelesson.pagingsample;
+package org.freelesson.pagingsample.ui;
 
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
+
+import org.freelesson.pagingsample.data.GithubRepository;
+import org.freelesson.pagingsample.model.Repo;
+import org.freelesson.pagingsample.model.RepoSearchResult;
 
 import java.util.List;
 

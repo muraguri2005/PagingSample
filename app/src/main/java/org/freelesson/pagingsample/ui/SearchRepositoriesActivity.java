@@ -1,4 +1,4 @@
-package org.freelesson.pagingsample;
+package org.freelesson.pagingsample.ui;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +15,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.freelesson.pagingsample.Injection;
+import org.freelesson.pagingsample.R;
 
 
 public class SearchRepositoriesActivity extends AppCompatActivity {
@@ -39,7 +42,7 @@ public class SearchRepositoriesActivity extends AppCompatActivity {
         setupScrollListener();
 
         initAdapter();
-        String query = savedInstanceState.getString(LAST_SEARCH_QUERY)!=null ? savedInstanceState.getString(LAST_SEARCH_QUERY) : DEFAULT_QUERY;
+        String query = savedInstanceState!= null && savedInstanceState.getString(LAST_SEARCH_QUERY)!=null ? savedInstanceState.getString(LAST_SEARCH_QUERY) : DEFAULT_QUERY;
         viewModel.searchRepo(query);
         initSearch(query);
 

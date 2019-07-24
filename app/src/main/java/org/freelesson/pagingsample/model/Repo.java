@@ -1,4 +1,4 @@
-package org.freelesson.pagingsample;
+package org.freelesson.pagingsample.model;
 
 import androidx.annotation.Nullable;
 import androidx.room.Entity;
@@ -10,24 +10,25 @@ import com.google.gson.annotations.SerializedName;
 public class Repo {
    @PrimaryKey
    @SerializedName("id")
-   Long id;
+   public Long id;
    @SerializedName("name")
-    String name;
+    public String name;
    @SerializedName("description")
-    String description;
+    public String description;
    @SerializedName("stargazers_count")
-    int stars;
+    public int stars;
    @SerializedName("full-name")
-    String fullName;
+    public String fullName;
    @SerializedName("forks_count")
-   int forks;
+   public int forks;
 
    @SerializedName("language")
-   String language;
+   public String language;
 
     @Override
     public boolean equals(@Nullable Object obj) {
         //TODO: add contents equal to
+        assert obj != null;
         return fullName.equals(((Repo)obj).fullName);
     }
 }

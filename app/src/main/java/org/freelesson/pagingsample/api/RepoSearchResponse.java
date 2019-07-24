@@ -1,6 +1,8 @@
-package org.freelesson.pagingsample;
+package org.freelesson.pagingsample.api;
 
 import com.google.gson.annotations.SerializedName;
+
+import org.freelesson.pagingsample.model.Repo;
 
 import java.util.Collections;
 import java.util.List;
@@ -8,6 +10,6 @@ import java.util.List;
 public class RepoSearchResponse {
     @SerializedName("total_count") Integer total = 0;
     @SerializedName("items")
-    List<Repo> items= Collections.emptyList();
+    public List<Repo> items= Collections.emptyList();
     Integer nextPage;
 }

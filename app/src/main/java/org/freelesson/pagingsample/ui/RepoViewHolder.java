@@ -1,4 +1,4 @@
-package org.freelesson.pagingsample;
+package org.freelesson.pagingsample.ui;
 
 import android.content.res.Resources;
 import android.view.LayoutInflater;
@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.freelesson.pagingsample.R;
+import org.freelesson.pagingsample.model.Repo;
 
 public class RepoViewHolder extends RecyclerView.ViewHolder {
     private TextView name ;

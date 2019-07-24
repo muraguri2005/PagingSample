@@ -1,4 +1,4 @@
-package org.freelesson.pagingsample;
+package org.freelesson.pagingsample.db;
 
 import android.content.Context;
 
@@ -6,12 +6,14 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import org.freelesson.pagingsample.model.Repo;
+
 @Database(entities = {Repo.class}, version = 1, exportSchema = false)
 public  abstract class RepoDatabase extends RoomDatabase  {
-    abstract RepoDao repoDaos();
+    public abstract RepoDao repoDaos();
 
     private static RepoDatabase INSTANCE;
-    static RepoDatabase getInstance(Context context) {
+    public static RepoDatabase getInstance(Context context) {
         if (INSTANCE==null){
             INSTANCE = buildDatabase(context);
         }

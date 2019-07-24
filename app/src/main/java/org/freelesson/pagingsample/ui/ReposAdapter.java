@@ -1,10 +1,12 @@
-package org.freelesson.pagingsample;
+package org.freelesson.pagingsample.ui;
 
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
+
+import org.freelesson.pagingsample.model.Repo;
 
 public class ReposAdapter extends ListAdapter<Repo, RepoViewHolder> {
     private static DiffUtil.ItemCallback<Repo> REPO_COMPARATOR = new DiffUtil.ItemCallback<Repo>() {

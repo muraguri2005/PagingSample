@@ -4,6 +4,12 @@ import android.content.Context;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import org.freelesson.pagingsample.api.GithubService;
+import org.freelesson.pagingsample.data.GithubRepository;
+import org.freelesson.pagingsample.db.GithubLocalCache;
+import org.freelesson.pagingsample.db.RepoDatabase;
+import org.freelesson.pagingsample.ui.ViewModelFactory;
+
 import java.util.concurrent.Executors;
 
 public class Injection {
