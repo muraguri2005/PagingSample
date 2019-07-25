@@ -17,4 +17,7 @@ public interface RepoDao {
 
     @Query("SELECT * from repos where (name LIKE :queryString) or (description LIKE :queryString) ORDER by stars DESC, name ASC")
     LiveData<List<Repo>> reposByName( String queryString);
+
+//    @Query("SELECT * from repos  ORDER by stars DESC, name ASC")
+//    LiveData<List<Repo>> reposByName( );
 }

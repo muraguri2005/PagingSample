@@ -38,7 +38,7 @@ public class SearchRepositoriesViewModel extends ViewModel {
         }
     }
 
-    private String lastQueryValue() {
+    String lastQueryValue() {
         return queryLiveData.getValue();
     }
 

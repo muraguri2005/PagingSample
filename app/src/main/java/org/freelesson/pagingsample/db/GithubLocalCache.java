@@ -21,7 +21,9 @@ public class GithubLocalCache {
         });
     }
     public LiveData<List<Repo>> reposByName(String name) {
-        String query = name.replace(' ','%');
+        System.out.println("Send query: "+name);
+        String query = "%".concat(name.replace(' ','%')).concat("%");
+        System.out.println("Send query updated: "+query);
         return repoDao.reposByName(query);
     }
 }
