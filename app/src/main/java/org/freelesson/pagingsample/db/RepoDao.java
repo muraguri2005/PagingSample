@@ -17,4 +17,5 @@ public interface RepoDao {
 
     @Query("SELECT * from repos where (name LIKE :queryString) or (description LIKE :queryString) ORDER by stars DESC, name ASC")
     DataSource.Factory<Integer,Repo> reposByName(String queryString);
+
 }

@@ -1,6 +1,7 @@
 package org.freelesson.pagingsample.ui;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -47,6 +48,13 @@ public class SearchRepositoriesActivity extends AppCompatActivity {
         initSearch(query);
 
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putString(LAST_SEARCH_QUERY,viewModel.lastQueryValue());
+    }
+
     private void initSearch(String query) {
         search_repo.setText(query);
         search_repo.setOnEditorActionListener((v, actionId, event) -> {
@@ -67,7 +75,7 @@ public class SearchRepositoriesActivity extends AppCompatActivity {
         });
     }
     private void updateRepoListFromInput() {
-        if (search_repo.getText().toString().trim().isEmpty()) {
+        if (!search_repo.getText().toString().trim().isEmpty()) {
             list.scrollToPosition(0);
             viewModel.searchRepo(search_repo.getText().toString().trim());
             adapter.submitList(null);

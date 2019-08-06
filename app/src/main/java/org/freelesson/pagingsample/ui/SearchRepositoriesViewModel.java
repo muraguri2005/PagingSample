@@ -11,7 +11,6 @@ import org.freelesson.pagingsample.data.GithubRepository;
 import org.freelesson.pagingsample.model.Repo;
 import org.freelesson.pagingsample.model.RepoSearchResult;
 
-import java.util.List;
 
 public class SearchRepositoriesViewModel extends ViewModel {
     private static final int VISIBLE_THRESHOLD = 5;
@@ -21,9 +20,7 @@ public class SearchRepositoriesViewModel extends ViewModel {
         this.repository = repository;
     }
     MutableLiveData<String> queryLiveData = new MutableLiveData<>();
-    LiveData<RepoSearchResult> repoResult = Transformations.map(queryLiveData, it -> {
-         return repository.search(it);
-    });
+    LiveData<RepoSearchResult> repoResult = Transformations.map(queryLiveData, it -> repository.search(it));
 
     LiveData<PagedList<Repo>> repos = Transformations.switchMap(repoResult, it-> {
         return it.data;
@@ -45,7 +42,7 @@ public class SearchRepositoriesViewModel extends ViewModel {
         }
     }
 
-    private String lastQueryValue() {
+    String lastQueryValue() {
         return queryLiveData.getValue();
     }
 

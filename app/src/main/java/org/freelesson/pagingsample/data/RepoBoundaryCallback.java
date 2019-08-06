@@ -25,6 +25,7 @@ public class RepoBoundaryCallback extends PagedList.BoundaryCallback<Repo> {
     private int lastRequestedPage = 1;
     MutableLiveData<String> networkErrors= new MutableLiveData<>();
     private static final int NETWORK_PAGE_SIZE = 50;
+    private static final String IN_QUALIFIER = "in:name,description";
     RepoBoundaryCallback(String query, GithubService service, GithubLocalCache cache) {
         this.query = query;
         this.service = service;
@@ -62,8 +63,7 @@ public class RepoBoundaryCallback extends PagedList.BoundaryCallback<Repo> {
         });
     }
     private void searchRepos(GithubService service, String query, int page, int itemsPerPage,final RepositoryCallback repositoryCallback)  {
-        String apiQuery = query;
-//                .concat(IN_QUALIFIER);
+        String apiQuery = query.concat(IN_QUALIFIER);
         service.searchRepos(apiQuery,page,itemsPerPage).enqueue(new Callback<RepoSearchResponse>() {
             @Override
             public void onResponse(Call<RepoSearchResponse> call, Response<RepoSearchResponse> response) {

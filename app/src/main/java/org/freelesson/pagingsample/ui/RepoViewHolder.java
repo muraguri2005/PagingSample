@@ -54,8 +54,8 @@ public class RepoViewHolder extends RecyclerView.ViewHolder {
             descriptionVisibility = View.VISIBLE;
         }
         description.setVisibility(descriptionVisibility);
-        stars.setText(repo.stars);
-        forks.setText(repo.forks);
+        stars.setText(String.valueOf(repo.stars));
+        forks.setText(String.valueOf(repo.forks));
 
         int languageVisibility = View.GONE;
         if (repo.language != null && !repo.language.isEmpty()) {

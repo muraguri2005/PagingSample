@@ -10,7 +10,6 @@ import androidx.paging.PagedList;
 
 import org.freelesson.pagingsample.db.GithubLocalCache;
 import org.freelesson.pagingsample.api.GithubService;
-import org.freelesson.pagingsample.db.InsertCallback;
 import org.freelesson.pagingsample.model.Repo;
 import org.freelesson.pagingsample.model.RepoSearchResult;
 import org.freelesson.pagingsample.api.RepoSearchResponse;
@@ -26,7 +25,7 @@ import retrofit2.Response;
 
 public class GithubRepository {
 
-    private static final String IN_QUALIFIER = "in:name,description";
+
 
     private static final int DATABASE_PAGE_SIZE = 20;
 
@@ -50,12 +49,6 @@ public class GithubRepository {
         LiveData<PagedList<Repo>> data = new LivePagedListBuilder(dataSourceFactory,DATABASE_PAGE_SIZE).setBoundaryCallback(boundaryCallback).build();
         return new RepoSearchResult(data, networkErrors);
     }
-
-
-
-
-
-
 
 }
 
