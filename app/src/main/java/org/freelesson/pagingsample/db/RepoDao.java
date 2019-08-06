@@ -1,6 +1,6 @@
 package org.freelesson.pagingsample.db;
 
-import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -16,5 +16,5 @@ public interface RepoDao {
     void insert(List<Repo> repos);
 
     @Query("SELECT * from repos where (name LIKE :queryString) or (description LIKE :queryString) ORDER by stars DESC, name ASC")
-    LiveData<List<Repo>> reposByName( String queryString);
+    DataSource.Factory<Integer,Repo> reposByName(String queryString);
 }

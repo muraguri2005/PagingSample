@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
+import androidx.paging.PagedList;
 
 import org.freelesson.pagingsample.data.GithubRepository;
 import org.freelesson.pagingsample.model.Repo;
@@ -24,7 +25,7 @@ public class SearchRepositoriesViewModel extends ViewModel {
          return repository.search(it);
     });
 
-    LiveData<List<Repo>> repos = Transformations.switchMap(repoResult, it-> {
+    LiveData<PagedList<Repo>> repos = Transformations.switchMap(repoResult, it-> {
         return it.data;
     });
     LiveData<String> networkErrors = Transformations.switchMap(repoResult, it -> {
@@ -39,7 +40,7 @@ public class SearchRepositoriesViewModel extends ViewModel {
         if (visibleItemCount+lastVisibleItemPosition+VISIBLE_THRESHOLD >= totalItemCount) {
             String immutableQuery = lastQueryValue();
             if (immutableQuery!=null) {
-                repository.requestMore(immutableQuery);
+                repository.search(immutableQuery);
             }
         }
     }
