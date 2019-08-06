@@ -27,8 +27,9 @@ public class Repo {
 
     @Override
     public boolean equals(@Nullable Object obj) {
-        //TODO: add contents equal to
         assert obj != null;
-        return fullName.equals(((Repo)obj).fullName);
+        if (obj instanceof Repo)
+            return fullName.equals(((Repo)obj).fullName);
+        return false;
     }
 }
