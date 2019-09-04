@@ -1,7 +1,12 @@
 package org.freelesson.pagingsample.data;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.paging.DataSource;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
 
 import org.freelesson.pagingsample.db.GithubLocalCache;
 import org.freelesson.pagingsample.api.GithubService;
@@ -20,7 +25,9 @@ import retrofit2.Response;
 
 public class GithubRepository {
 
-    private static final String IN_QUALIFIER = "in:name,description";
+
+
+    private static final int DATABASE_PAGE_SIZE = 20;
 
     private GithubService service;
     private GithubLocalCache cache;
@@ -30,74 +37,17 @@ public class GithubRepository {
         this.cache = cache;
     }
 
-    private MutableLiveData<String> networkErrors= new MutableLiveData<>();
+
 
 
     public RepoSearchResult search(String query) {
-        lastRequestedPage = 1;
-        requestAndSaveData(query);
-        LiveData<List<Repo>> data = cache.reposByName(query);
+        Log.d("GithubRepository","New query: "+query);
+        DataSource.Factory dataSourceFactory = cache.reposByName(query);
+        RepoBoundaryCallback boundaryCallback = new RepoBoundaryCallback(query,service,cache);
+        MutableLiveData<String> networkErrors = boundaryCallback.networkErrors;
+
+        LiveData<PagedList<Repo>> data = new LivePagedListBuilder(dataSourceFactory,DATABASE_PAGE_SIZE).setBoundaryCallback(boundaryCallback).build();
         return new RepoSearchResult(data, networkErrors);
-    }
-    private boolean isRequestInProgress = false;
-    public void requestMore(String query) {
-        requestAndSaveData(query);
-    }
-    private void requestAndSaveData( String query) {
-        if (isRequestInProgress)
-            return;
-        isRequestInProgress = true;
-        searchRepos(service, query, lastRequestedPage, NETWORK_PAGE_SIZE, new RepositoryCallback() {
-            @Override
-            public void onSuccess(List list) {
-                cache.insert(list, () -> {
-                    System.out.println("Send something complete "+list.size());
-                    lastRequestedPage++;
-                    isRequestInProgress = false;
-                });
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-               networkErrors.postValue(errorMessage);
-               isRequestInProgress = false;
-            }
-        });
-    }
-    private static final int NETWORK_PAGE_SIZE = 50;
-    private int lastRequestedPage = 1;
-    private void searchRepos(GithubService service, String query, int page, int itemsPerPage,final RepositoryCallback repositoryCallback)  {
-        String apiQuery = query;
-//                .concat(IN_QUALIFIER);
-        service.searchRepos(apiQuery,page,itemsPerPage).enqueue(new Callback<RepoSearchResponse>() {
-            @Override
-            public void onResponse(Call<RepoSearchResponse> call, Response<RepoSearchResponse> response) {
-                if (response.isSuccessful()) {
-                    System.out.println(response.body()!=null && !response.body().items.isEmpty());
-                    if (response.body()!=null && !response.body().items.isEmpty()) {
-                        System.out.println("Send something "+response.body().items.size());
-                        repositoryCallback.onSuccess(response.body().items);
-                    } else {
-                        System.out.println("Send empty");
-                        repositoryCallback.onSuccess(Collections.emptyList());
-                    }
-                } else {
-                    try {
-                        if (response.errorBody() != null && !response.errorBody().string().isEmpty())
-                            repositoryCallback.onError(response.errorBody().string());
-                    } catch (IOException e) {
-                        System.err.println(e.getMessage());
-                    }
-                    repositoryCallback.onError("unknown error");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<RepoSearchResponse> call, Throwable t) {
-               repositoryCallback.onError(t.getMessage()!=null && !t.getMessage().isEmpty() ? t.getMessage() : "unknown error");
-            }
-        });
-
     }
 
 }
@@ -106,3 +56,4 @@ interface RepositoryCallback<Repo> {
     void onSuccess(List<Repo> repos);
     void onError(String errorMessage);
 }
+

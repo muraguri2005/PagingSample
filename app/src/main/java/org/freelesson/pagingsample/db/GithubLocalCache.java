@@ -1,6 +1,6 @@
 package org.freelesson.pagingsample.db;
 
-import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 
 import org.freelesson.pagingsample.model.Repo;
 
@@ -20,10 +20,8 @@ public class GithubLocalCache {
             insertCallback.insertFinished();
         });
     }
-    public LiveData<List<Repo>> reposByName(String name) {
-        System.out.println("Send query: "+name);
+    public DataSource.Factory<Integer,Repo> reposByName(String name) {
         String query = "%".concat(name.replace(' ','%')).concat("%");
-        System.out.println("Send query updated: "+query);
         return repoDao.reposByName(query);
     }
 }
