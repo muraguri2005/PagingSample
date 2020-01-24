@@ -8,20 +8,12 @@ import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
-import org.freelesson.pagingsample.db.GithubLocalCache;
 import org.freelesson.pagingsample.api.GithubService;
+import org.freelesson.pagingsample.db.GithubLocalCache;
 import org.freelesson.pagingsample.model.Repo;
 import org.freelesson.pagingsample.model.RepoSearchResult;
-import org.freelesson.pagingsample.api.RepoSearchResponse;
 
-import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
-
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class GithubRepository {
 
