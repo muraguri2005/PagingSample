@@ -12,6 +12,7 @@ import org.freelesson.pagingsample.model.Repo;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -75,8 +76,8 @@ public class RepoBoundaryCallback extends PagedList.BoundaryCallback<Repo> {
                         repositoryCallback.onSuccess( Collections.emptyList());
                 } else {
                     try {
-                        if (response.errorBody() != null && !response.errorBody().string().isEmpty())
-                            repositoryCallback.onError(response.errorBody().string());
+                        if (response.errorBody() != null && !Objects.requireNonNull(response.errorBody()).string().isEmpty())
+                            repositoryCallback.onError(Objects.requireNonNull(response.errorBody()).string());
                     } catch (IOException e) {
                         System.err.println(e.getMessage());
                     }

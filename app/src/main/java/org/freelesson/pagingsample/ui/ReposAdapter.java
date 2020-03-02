@@ -20,7 +20,7 @@ public class ReposAdapter extends PagedListAdapter<Repo, RepoViewHolder> {
             return oldItem.equals(newItem);
         }
     };
-    public ReposAdapter() {
+    ReposAdapter() {
         super(REPO_COMPARATOR );
     }
     @NonNull

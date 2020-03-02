@@ -12,11 +12,11 @@ import org.freelesson.pagingsample.model.Repo;
 import org.freelesson.pagingsample.model.RepoSearchResult;
 
 
-public class SearchRepositoriesViewModel extends ViewModel {
+class SearchRepositoriesViewModel extends ViewModel {
     private static final int VISIBLE_THRESHOLD = 5;
 
     private GithubRepository repository;
-    public SearchRepositoriesViewModel(GithubRepository repository) {
+    SearchRepositoriesViewModel(GithubRepository repository) {
         this.repository = repository;
     }
     MutableLiveData<String> queryLiveData = new MutableLiveData<>();

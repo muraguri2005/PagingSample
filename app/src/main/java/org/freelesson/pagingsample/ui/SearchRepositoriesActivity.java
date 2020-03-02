@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,7 +36,7 @@ public class SearchRepositoriesActivity extends AppCompatActivity {
         emptyList = findViewById(R.id.emptyList);
         list = findViewById(R.id.list);
         search_repo = findViewById(R.id.search_repo);
-        viewModel = ViewModelProviders.of(this, Injection.provideViewModelFactory(this)).get(SearchRepositoriesViewModel.class);
+        viewModel = new ViewModelProvider(this, Injection.provideViewModelFactory(this)).get(SearchRepositoriesViewModel.class);
         DividerItemDecoration decoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
 
         list.addItemDecoration(decoration);
@@ -98,6 +98,7 @@ public class SearchRepositoriesActivity extends AppCompatActivity {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView,dx,dy);
+                assert layoutManager != null;
                 int totalItemCount = layoutManager.getItemCount();
                 int visibleItemCount = layoutManager.getChildCount();
                 int lastVisibleItem = layoutManager.findLastVisibleItemPosition();

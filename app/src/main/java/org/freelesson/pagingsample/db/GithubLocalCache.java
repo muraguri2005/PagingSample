@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.concurrent.Executor;
 
 public class GithubLocalCache {
-    RepoDao repoDao;
-    Executor ioExecutor;
+    private RepoDao repoDao;
+    private Executor ioExecutor;
     public  GithubLocalCache(RepoDao repoDao, Executor ioExecutor) {
         this.repoDao = repoDao;
         this.ioExecutor = ioExecutor;
