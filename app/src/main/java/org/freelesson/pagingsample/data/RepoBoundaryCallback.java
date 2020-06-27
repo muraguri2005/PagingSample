@@ -8,6 +8,7 @@ import org.freelesson.pagingsample.api.GithubService;
 import org.freelesson.pagingsample.api.RepoSearchResponse;
 import org.freelesson.pagingsample.db.GithubLocalCache;
 import org.freelesson.pagingsample.model.Repo;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -63,11 +64,11 @@ public class RepoBoundaryCallback extends PagedList.BoundaryCallback<Repo> {
             }
         });
     }
-    private void searchRepos(GithubService service, String query, int page, int itemsPerPage,final RepositoryCallback repositoryCallback)  {
+    private void searchRepos(GithubService service, String query, int page, int itemsPerPage,final RepositoryCallback<List<Repo>> repositoryCallback)  {
         String apiQuery = query.concat(IN_QUALIFIER);
         service.searchRepos(apiQuery,page,itemsPerPage).enqueue(new Callback<RepoSearchResponse>() {
             @Override
-            public void onResponse(Call<RepoSearchResponse> call, Response<RepoSearchResponse> response) {
+            public void onResponse(@NotNull Call<RepoSearchResponse> call, @NotNull Response<RepoSearchResponse> response) {
                 if (response.isSuccessful()) {
                     System.out.println(response.body()!=null && !response.body().items.isEmpty());
                     if (response.body()!=null && !response.body().items.isEmpty())
@@ -86,7 +87,7 @@ public class RepoBoundaryCallback extends PagedList.BoundaryCallback<Repo> {
             }
 
             @Override
-            public void onFailure(Call<RepoSearchResponse> call, Throwable t) {
+            public void onFailure(@NotNull Call<RepoSearchResponse> call, Throwable t) {
                 repositoryCallback.onError(t.getMessage()!=null && !t.getMessage().isEmpty() ? t.getMessage() : "unknown error");
             }
         });

@@ -17,7 +17,6 @@ public class RepoViewHolder extends RecyclerView.ViewHolder {
     private TextView stars ;
     private TextView language ;
     private TextView forks ;
-    private Repo repo;
 
     protected RepoViewHolder(View view) {
         super(view);
@@ -46,7 +45,6 @@ public class RepoViewHolder extends RecyclerView.ViewHolder {
         }
     }
     private void showRepoData(Repo repo) {
-        this.repo = repo;
         name.setText(repo.fullName);
         int descriptionVisibility = View.GONE;
         if (repo.description!=null && !repo.description.isEmpty()) {

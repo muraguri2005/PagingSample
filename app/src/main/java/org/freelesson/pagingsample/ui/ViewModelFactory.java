@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import org.freelesson.pagingsample.data.GithubRepository;
-import org.freelesson.pagingsample.ui.SearchRepositoriesViewModel;
 
 public class ViewModelFactory  implements ViewModelProvider.Factory {
     private GithubRepository githubRepository;

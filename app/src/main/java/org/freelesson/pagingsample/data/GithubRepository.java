@@ -44,7 +44,7 @@ public class GithubRepository {
 
 }
 
-interface RepositoryCallback<Repo> {
+interface RepositoryCallback<T> {
     void onSuccess(List<Repo> repos);
     void onError(String errorMessage);
 }

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.freelesson.pagingsample.Injection;
 import org.freelesson.pagingsample.R;
+import org.jetbrains.annotations.NotNull;
 
 
 public class SearchRepositoriesActivity extends AppCompatActivity {
@@ -50,7 +51,7 @@ public class SearchRepositoriesActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+    public void onSaveInstanceState(@NotNull Bundle outState, @NotNull PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
         outState.putString(LAST_SEARCH_QUERY,viewModel.lastQueryValue());
     }
