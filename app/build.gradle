@@ -20,19 +20,18 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
-    buildToolsVersion = '28.0.3'
 }
 
 dependencies {
     def room_version = '2.2.5'
     def lifecycle_version = '2.2.0'
-    def supportLibVersion = '1.1.0'
-    def constraintLayoutVersion = '1.1.3'
+    def supportLibVersion = '1.2.0'
+    def constraintLayoutVersion = '2.0.1'
     def paging_version = '2.1.2'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "androidx.appcompat:appcompat:$supportLibVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.material:material:1.2.1'
 
 
     implementation "androidx.paging:paging-runtime:$paging_version"
@@ -44,11 +43,11 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-reactivestreams:$lifecycle_version"
     implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0'
     implementation 'androidx.fragment:fragment:1.2.5'
-    implementation 'com.google.dagger:dagger:2.28.1'
+    implementation 'com.google.dagger:dagger:2.28.3'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:retrofit-mock:2.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.8.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.8.1'
     annotationProcessor "androidx.room:room-compiler:$room_version"
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
