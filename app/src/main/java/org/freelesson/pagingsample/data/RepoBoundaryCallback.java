@@ -20,9 +20,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RepoBoundaryCallback extends PagedList.BoundaryCallback<Repo> {
-    private String query;
-    private GithubService service;
-    private GithubLocalCache cache;
+    private final String query;
+    private final GithubService service;
+    private final GithubLocalCache cache;
     private boolean isRequestInProgress = false;
     private int lastRequestedPage = 1;
     MutableLiveData<String> networkErrors= new MutableLiveData<>();
@@ -87,7 +87,7 @@ public class RepoBoundaryCallback extends PagedList.BoundaryCallback<Repo> {
             }
 
             @Override
-            public void onFailure(@NotNull Call<RepoSearchResponse> call, Throwable t) {
+            public void onFailure(@NotNull Call<RepoSearchResponse> call, @NotNull Throwable t) {
                 repositoryCallback.onError(t.getMessage()!=null && !t.getMessage().isEmpty() ? t.getMessage() : "unknown error");
             }
         });

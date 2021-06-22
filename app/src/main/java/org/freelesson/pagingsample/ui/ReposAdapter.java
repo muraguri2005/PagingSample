@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import org.freelesson.pagingsample.model.Repo;
 
 public class ReposAdapter extends PagedListAdapter<Repo, RepoViewHolder> {
-    private static DiffUtil.ItemCallback<Repo> REPO_COMPARATOR = new DiffUtil.ItemCallback<Repo>() {
+    private static final DiffUtil.ItemCallback<Repo> REPO_COMPARATOR = new DiffUtil.ItemCallback<Repo>() {
         @Override
         public boolean areItemsTheSame(@NonNull Repo oldItem, @NonNull Repo newItem) {
             return oldItem.fullName.equals(newItem.fullName);

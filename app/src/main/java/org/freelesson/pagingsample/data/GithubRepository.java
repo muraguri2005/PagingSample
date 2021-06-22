@@ -21,8 +21,8 @@ public class GithubRepository {
 
     private static final int DATABASE_PAGE_SIZE = 20;
 
-    private GithubService service;
-    private GithubLocalCache cache;
+    private final GithubService service;
+    private final GithubLocalCache cache;
 
     public GithubRepository(GithubService service, GithubLocalCache cache) {
         this.service = service;

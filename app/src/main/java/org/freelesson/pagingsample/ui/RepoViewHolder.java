@@ -12,11 +12,11 @@ import org.freelesson.pagingsample.R;
 import org.freelesson.pagingsample.model.Repo;
 
 public class RepoViewHolder extends RecyclerView.ViewHolder {
-    private TextView name ;
-    private TextView description ;
-    private TextView stars ;
-    private TextView language ;
-    private TextView forks ;
+    private final TextView name ;
+    private final TextView description ;
+    private final TextView stars ;
+    private final TextView language ;
+    private final TextView forks ;
 
     protected RepoViewHolder(View view) {
         super(view);
