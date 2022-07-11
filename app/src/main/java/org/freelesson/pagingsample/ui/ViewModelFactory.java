@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import org.freelesson.pagingsample.data.GithubRepository;
 
 public class ViewModelFactory  implements ViewModelProvider.Factory {
-    private GithubRepository githubRepository;
+    private final GithubRepository githubRepository;
     public ViewModelFactory(GithubRepository githubRepository) {
         this.githubRepository = githubRepository;
     }
