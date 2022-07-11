@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
+import androidx.paging.PagingData;
 
 import org.freelesson.pagingsample.api.GithubService;
 import org.freelesson.pagingsample.db.GithubLocalCache;
@@ -38,7 +39,7 @@ public class GithubRepository {
         RepoBoundaryCallback boundaryCallback = new RepoBoundaryCallback(query,service,cache);
         MutableLiveData<String> networkErrors = boundaryCallback.networkErrors;
 
-        LiveData<PagedList<Repo>> data = new LivePagedListBuilder(dataSourceFactory,DATABASE_PAGE_SIZE).setBoundaryCallback(boundaryCallback).build();
+        LiveData<PagingData<Repo>> data = new LivePagedListBuilder(dataSourceFactory,DATABASE_PAGE_SIZE).setBoundaryCallback(boundaryCallback).build();
         return new RepoSearchResult(data, networkErrors);
     }
 

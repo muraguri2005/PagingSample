@@ -2,7 +2,6 @@ package org.freelesson.pagingsample.ui;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -13,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.paging.PagingData;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -79,15 +79,15 @@ public class SearchRepositoriesActivity extends AppCompatActivity {
         if (!search_repo.getText().toString().trim().isEmpty()) {
             list.scrollToPosition(0);
             viewModel.searchRepo(search_repo.getText().toString().trim());
-            adapter.submitList(null);
+            adapter.submitData(getLifecycle(), PagingData.empty());
         }
     }
     private void initAdapter() {
         list.setAdapter(adapter);
         viewModel.repos.observe(this, repos -> {
-            Log.d("Activity","list "+repos.size());
-            showEmptyList(repos.isEmpty());
-            adapter.submitList(repos);
+//            Log.d("Activity","list "+repos.size());
+//            showEmptyList(repos.isEmpty());
+            adapter.submitData(getLifecycle(),repos);
         });
         viewModel.networkErrors.observe(this, s -> Toast.makeText(getApplicationContext(),"\uD83D\uDE28 Wooops "+s,Toast.LENGTH_LONG).show());
 

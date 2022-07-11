@@ -3,12 +3,12 @@ package org.freelesson.pagingsample.ui;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.paging.PagedListAdapter;
+import androidx.paging.PagingDataAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 
 import org.freelesson.pagingsample.model.Repo;
 
-public class ReposAdapter extends PagedListAdapter<Repo, RepoViewHolder> {
+public class ReposAdapter extends PagingDataAdapter<Repo, RepoViewHolder> {
     private static final DiffUtil.ItemCallback<Repo> REPO_COMPARATOR = new DiffUtil.ItemCallback<Repo>() {
         @Override
         public boolean areItemsTheSame(@NonNull Repo oldItem, @NonNull Repo newItem) {

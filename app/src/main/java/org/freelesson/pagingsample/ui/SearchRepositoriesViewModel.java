@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
-import androidx.paging.PagedList;
+import androidx.paging.PagingData;
 
 import org.freelesson.pagingsample.data.GithubRepository;
 import org.freelesson.pagingsample.model.Repo;
@@ -22,7 +22,7 @@ class SearchRepositoriesViewModel extends ViewModel {
     MutableLiveData<String> queryLiveData = new MutableLiveData<>();
     LiveData<RepoSearchResult> repoResult = Transformations.map(queryLiveData, it -> repository.search(it));
 
-    LiveData<PagedList<Repo>> repos = Transformations.switchMap(repoResult, it-> it.data);
+    LiveData<PagingData<Repo>> repos = Transformations.switchMap(repoResult, it-> it.data);
     LiveData<String> networkErrors = Transformations.switchMap(repoResult, it -> it.networkErrors);
 
     public void searchRepo(String query) {
