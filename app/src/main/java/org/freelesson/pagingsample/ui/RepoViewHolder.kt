@@ -1,67 +1,77 @@
-package org.freelesson.pagingsample.ui;
+package org.freelesson.pagingsample.ui
 
-import android.content.res.Resources;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.content.Intent
+import android.net.Uri
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import org.freelesson.pagingsample.R
+import org.freelesson.pagingsample.model.Repo
 
-import androidx.recyclerview.widget.RecyclerView;
+class RepoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    private val name: TextView
+    private val description: TextView
+    private val stars: TextView
+    private val language: TextView
+    private val forks: TextView
+    private var repo: Repo? = null
 
-import org.freelesson.pagingsample.R;
-import org.freelesson.pagingsample.model.Repo;
-
-public class RepoViewHolder extends RecyclerView.ViewHolder {
-    private final TextView name ;
-    private final TextView description ;
-    private final TextView stars ;
-    private final TextView language ;
-    private final TextView forks ;
-
-    protected RepoViewHolder(View view) {
-        super(view);
-       name = view.findViewById(R.id.repo_name);
-        description = view.findViewById(R.id.repo_description);
-        stars = view.findViewById(R.id.repo_stars);
-        language = view.findViewById(R.id.repo_language);
-        forks= view.findViewById(R.id.repo_forks);
+    init {
+        name = view.findViewById(R.id.repo_name)
+        description = view.findViewById(R.id.repo_description)
+        stars = view.findViewById(R.id.repo_stars)
+        language = view.findViewById(R.id.repo_language)
+        forks = view.findViewById(R.id.repo_forks)
+        view.setOnClickListener {
+            repo?.url?.let { url ->
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                view.context.startActivity(intent)
+            }
+        }
     }
-    public static RepoViewHolder create(ViewGroup parent) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.repo_view_item, parent,false);
-        return new RepoViewHolder(view);
-    }
 
-
-    public void bind(Repo repo) {
-        if (repo==null) {
-            Resources resources = itemView.getResources();
-            name.setText(resources.getString(R.string.loading));
-            description.setVisibility(View.GONE);
-            language.setVisibility(View.GONE);
-            stars.setText(resources.getText(R.string.unknown));
-            forks.setText(resources.getText(R.string.unknown));
+    fun bind(repo: Repo?) {
+        if (repo == null) {
+            val resources = itemView.resources
+            name.text = resources.getString(R.string.loading)
+            description.visibility = View.GONE
+            language.visibility = View.GONE
+            stars.text = resources.getText(R.string.unknown)
+            forks.text = resources.getText(R.string.unknown)
         } else {
-            showRepoData(repo);
+            showRepoData(repo)
         }
     }
-    private void showRepoData(Repo repo) {
-        name.setText(repo.fullName);
-        int descriptionVisibility = View.GONE;
-        if (repo.description!=null && !repo.description.isEmpty()) {
-            description.setText(repo.description);
-            descriptionVisibility = View.VISIBLE;
-        }
-        description.setVisibility(descriptionVisibility);
-        stars.setText(String.valueOf(repo.stars));
-        forks.setText(String.valueOf(repo.forks));
 
-        int languageVisibility = View.GONE;
-        if (repo.language != null && !repo.language.isEmpty()) {
-            Resources resources = this.itemView.getContext().getResources();
-            language.setText(resources.getString(R.string.language,repo.language));
-            languageVisibility =  View.VISIBLE;
+    private fun showRepoData(repo: Repo) {
+        this.repo = repo
+        name.text = repo.fullName
+        var descriptionVisibility = View.GONE
+        if (repo.description != null && repo.description.isNotEmpty()) {
+            description.text = repo.description
+            descriptionVisibility = View.VISIBLE
         }
-        language.setVisibility(languageVisibility);
-
+        description.visibility = descriptionVisibility
+        stars.text = repo.stars.toString()
+        forks.text = repo.forks.toString()
+        var languageVisibility = View.GONE
+        if (!repo.language.isNullOrEmpty()) {
+            val resources = itemView.context.resources
+            language.text = resources.getString(R.string.language, repo.language)
+            languageVisibility = View.VISIBLE
+        }
+        language.visibility = languageVisibility
     }
+
+    companion object {
+        fun create(parent: ViewGroup): RepoViewHolder {
+            val view =
+                LayoutInflater.from(parent.context).inflate(R.layout.repo_view_item, parent, false)
+            return RepoViewHolder(view)
+        }
+    }
+
+
 }

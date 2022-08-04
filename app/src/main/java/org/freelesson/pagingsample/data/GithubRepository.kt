@@ -1,52 +1,40 @@
-package org.freelesson.pagingsample.data;
+package org.freelesson.pagingsample.data
 
-import android.util.Log;
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
+import org.freelesson.pagingsample.api.GithubService
+import org.freelesson.pagingsample.db.RepoDatabase
+import org.freelesson.pagingsample.model.Repo
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.paging.DataSource;
-import androidx.paging.LivePagedListBuilder;
-import androidx.paging.PagedList;
-import androidx.paging.PagingData;
-
-import org.freelesson.pagingsample.api.GithubService;
-import org.freelesson.pagingsample.db.GithubLocalCache;
-import org.freelesson.pagingsample.model.Repo;
-import org.freelesson.pagingsample.model.RepoSearchResult;
-
-import java.util.List;
-
-public class GithubRepository {
-
-
-
-    private static final int DATABASE_PAGE_SIZE = 20;
-
-    private final GithubService service;
-    private final GithubLocalCache cache;
-
-    public GithubRepository(GithubService service, GithubLocalCache cache) {
-        this.service = service;
-        this.cache = cache;
+class GithubRepository(
+    private val service: GithubService,
+    private val database: RepoDatabase
+) {
+    @OptIn(ExperimentalPagingApi::class)
+    fun getSearchResultStream(query: String): Flow<PagingData<Repo>> {
+        val dbQuery = "%${query.replace(' ', '%')}%"
+        val pagingSourceFactory = { database.repoDao().reposByName(dbQuery) }
+        return Pager(
+            config = PagingConfig(
+                pageSize = DATABASE_PAGE_SIZE,
+                enablePlaceholders = false
+            ),
+            remoteMediator = GithubRemoteMediator(
+                query,
+                service,
+                database
+            ),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
     }
-
-
-
-
-    public RepoSearchResult search(String query) {
-        Log.d("GithubRepository","New query: "+query);
-        DataSource.Factory dataSourceFactory = cache.reposByName(query);
-        RepoBoundaryCallback boundaryCallback = new RepoBoundaryCallback(query,service,cache);
-        MutableLiveData<String> networkErrors = boundaryCallback.networkErrors;
-
-        LiveData<PagingData<Repo>> data = new LivePagedListBuilder(dataSourceFactory,DATABASE_PAGE_SIZE).setBoundaryCallback(boundaryCallback).build();
-        return new RepoSearchResult(data, networkErrors);
-    }
-
 }
 
-interface RepositoryCallback<T> {
-    void onSuccess(List<Repo> repos);
-    void onError(String errorMessage);
-}
+private const val DATABASE_PAGE_SIZE = 20
 
+internal interface RepositoryCallback<T> {
+    fun onSuccess(repos: List<Repo?>?)
+    fun onError(errorMessage: String)
+}

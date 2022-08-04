@@ -1,23 +1,38 @@
-package org.freelesson.pagingsample.api;
+package org.freelesson.pagingsample.api
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Query
 
-public interface GithubService {
+const val IN_QUALIFIER = "in:name,description"
+
+interface GithubService {
     @GET("search/repositories?sort=stars")
-    Call<RepoSearchResponse> searchRepos(@Query("q") String query, @Query("page") Integer page, @Query("per_page") Integer itemsPerPage);
+    suspend fun searchRepos(
+        @Query("q") query: String,
+        @Query("page") page: Int,
+        @Query("per_page") itemsPerPage: Int
+    ): RepoSearchResponse
 
-     String BASE_URL = "https://api.github.com/";
+    companion object {
+        fun create(): GithubService {
+            val logger = HttpLoggingInterceptor()
+            logger.level = HttpLoggingInterceptor.Level.BASIC
 
-     static GithubService create() {
-         HttpLoggingInterceptor logger = new HttpLoggingInterceptor();
-         logger.setLevel(HttpLoggingInterceptor.Level.BASIC);
-         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(logger).build();
-         return new Retrofit.Builder().baseUrl(BASE_URL).client(client).addConverterFactory(GsonConverterFactory.create()).build().create(GithubService.class);
-     }
+            val client: OkHttpClient = OkHttpClient.Builder()
+                .addInterceptor(logger)
+                .build()
+            return Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(GithubService::class.java)
+        }
+
+        private const val BASE_URL = "https://api.github.com/"
+    }
 }

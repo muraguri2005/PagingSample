@@ -1,35 +1,18 @@
-package org.freelesson.pagingsample.model;
+package org.freelesson.pagingsample.model
 
-import androidx.annotation.Nullable;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-import com.google.gson.annotations.SerializedName;
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "repos")
-public class Repo {
-   @PrimaryKey
-   @SerializedName("id")
-   public Long id;
-   @SerializedName("name")
-    public String name;
-   @SerializedName("description")
-    public String description;
-   @SerializedName("stargazers_count")
-    public int stars;
-   @SerializedName("full_name")
-    public String fullName;
-   @SerializedName("forks_count")
-   public int forks;
-
-   @SerializedName("language")
-   public String language;
-
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        assert obj != null;
-        if (obj instanceof Repo)
-            return fullName.equals(((Repo)obj).fullName);
-        return false;
-    }
-}
+class Repo(
+    @PrimaryKey
+    @field:SerializedName("id") val id: Long,
+    @field:SerializedName("name") val name: String,
+    @field:SerializedName("full_name") val fullName: String,
+    @field:SerializedName("description") val description: String?,
+    @field:SerializedName("html_url") val url: String,
+    @field:SerializedName("stargazers_count") val stars: Int,
+    @field:SerializedName("forks_count") var forks: Int,
+    @field:SerializedName("language") val language: String?
+)
