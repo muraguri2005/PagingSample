@@ -1,32 +1,27 @@
 package org.freelesson.pagingsample.ui
 
 import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import org.freelesson.pagingsample.R
 import org.freelesson.pagingsample.model.Repo
 
 class RepoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    private val name: TextView
-    private val description: TextView
-    private val stars: TextView
-    private val language: TextView
-    private val forks: TextView
+    private val name: TextView = view.findViewById(R.id.repo_name)
+    private val description: TextView = view.findViewById(R.id.repo_description)
+    private val stars: TextView = view.findViewById(R.id.repo_stars)
+    private val language: TextView = view.findViewById(R.id.repo_language)
+    private val forks: TextView = view.findViewById(R.id.repo_forks)
     private var repo: Repo? = null
 
     init {
-        name = view.findViewById(R.id.repo_name)
-        description = view.findViewById(R.id.repo_description)
-        stars = view.findViewById(R.id.repo_stars)
-        language = view.findViewById(R.id.repo_language)
-        forks = view.findViewById(R.id.repo_forks)
         view.setOnClickListener {
             repo?.url?.let { url ->
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                val intent = Intent(Intent.ACTION_VIEW, url.toUri())
                 view.context.startActivity(intent)
             }
         }
