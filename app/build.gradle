@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
+    namespace "org.freelesson.pagingsample"
     compileSdkVersion rootProject.compileSdkVersion
     defaultConfig {
         applicationId "org.freelesson.pagingsample"
@@ -19,12 +20,13 @@ android {
         }
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
         freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
     }
+
     compileOptions {
-        sourceCompatibility = '1.8'
-        targetCompatibility = '1.8'
+        sourceCompatibility = '17'
+        targetCompatibility = '17'
     }
     buildFeatures {
         viewBinding = true
@@ -33,23 +35,12 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-//    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-//    implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
-//    implementation 'com.google.dagger:dagger:2.42'
-
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
     implementation "androidx.appcompat:appcompat:$supportLibVersion"
     implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     implementation "com.google.android.material:material:$materialVersion"
-
-
-
-
-
     implementation "androidx.core:core-ktx:$coreVersion"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
@@ -58,14 +49,12 @@ dependencies {
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
     implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"
-    implementation "androidx.room:room-paging:2.4.3"
+    implementation 'androidx.room:room-paging:2.8.4'
     kapt "androidx.room:room-compiler:$roomVersion"
-
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "com.squareup.retrofit2:retrofit-mock:$retrofitVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpLoggingInterceptorVersion"
-
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
 
