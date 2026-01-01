@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.devtools.ksp'
+
 
 android {
     namespace "org.freelesson.pagingsample"
@@ -19,9 +20,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    kotlinOptions {
-        jvmTarget = "17"
-        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
+    kotlin {
+        jvmToolchain(17)
     }
 
     compileOptions {
@@ -50,14 +50,13 @@ dependencies {
     implementation "androidx.room:room-ktx:$roomVersion"
     implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"
     implementation 'androidx.room:room-paging:2.8.4'
-    kapt "androidx.room:room-compiler:$roomVersion"
+    ksp "androidx.room:room-compiler:$roomVersion"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "com.squareup.retrofit2:retrofit-mock:$retrofitVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpLoggingInterceptorVersion"
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
-
 
 
 }
