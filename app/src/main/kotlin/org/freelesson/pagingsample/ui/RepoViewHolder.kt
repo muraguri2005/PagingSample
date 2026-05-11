@@ -44,7 +44,7 @@ class RepoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         this.repo = repo
         name.text = repo.fullName
         var descriptionVisibility = View.GONE
-        if (repo.description != null && repo.description.isNotEmpty()) {
+        if (!repo.description.isNullOrEmpty()) {
             description.text = repo.description
             descriptionVisibility = View.VISIBLE
         }

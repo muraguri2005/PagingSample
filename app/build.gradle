@@ -1,10 +1,9 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 apply plugin: 'com.google.devtools.ksp'
 
 
 android {
-    namespace "org.freelesson.pagingsample"
+    namespace = "org.freelesson.pagingsample"
     compileSdk 37
     defaultConfig {
         applicationId "org.freelesson.pagingsample"
@@ -31,7 +30,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    compileSdkMinor 0
+    compileSdkMinor = 0
     buildToolsVersion '36.1.0'
 }
 
