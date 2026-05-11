@@ -5,7 +5,7 @@ apply plugin: 'com.google.devtools.ksp'
 
 android {
     namespace "org.freelesson.pagingsample"
-    compileSdkVersion rootProject.compileSdkVersion
+    compileSdk 37
     defaultConfig {
         applicationId "org.freelesson.pagingsample"
         minSdkVersion rootProject.minSdkVersion
@@ -31,6 +31,8 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    compileSdkMinor 0
+    buildToolsVersion '36.1.0'
 }
 
 dependencies {

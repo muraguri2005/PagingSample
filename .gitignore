@@ -18,3 +18,5 @@ app/.classpath
 .project
 app/.project
 .settings/
+
+gradle-daemon-jvm.properties
